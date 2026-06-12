@@ -21,7 +21,7 @@
 }
 
 .admissions-page {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: var(--text-dark);
   background-color: var(--bg-white);
   overflow-x: hidden;
@@ -30,7 +30,7 @@
 
 /* Elegant serif styling */
 .serif-italic {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Poppins', sans-serif;
   font-style: italic;
   font-weight: 500;
 }
@@ -1203,10 +1203,14 @@
   }
 
   .level-left-cell,
-  .level-right-cell {
-    justify-content: flex-start;
-    padding-right: 0;
-    padding-left: 0;
+  .level-right-cell,
+  .level-left-cell.cell-circle,
+  .level-right-cell.cell-circle,
+  .level-left-cell.cell-card,
+  .level-right-cell.cell-card {
+    justify-content: center;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
   }
 
   .visual-circle-wrapper {

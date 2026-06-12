@@ -7,8 +7,8 @@
   --color-orange-accent: #FD7201;
   --color-brand-white: #FFFFFF;
 
-  --font-sans: "Outfit", system-ui, sans-serif;
-  --font-handwritten: "Caveat", cursive;
+  --font-sans: "Poppins", system-ui, sans-serif;
+  --font-handwritten: "Poppins", sans-serif;
 
   --animate-float-slow: float-slow 8s ease-in-out infinite;
   --animate-float-medium: float-medium 6s ease-in-out infinite;

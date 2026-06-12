@@ -22,16 +22,16 @@ function SectionSkeleton({ title }) {
     <div className="w-full min-h-[50vh] flex flex-col items-center justify-center py-20 px-4 bg-slate-50 border-t border-slate-100 select-none">
       <div className="max-w-md w-full space-y-6 text-center flex flex-col items-center">
         {/* Pulsing visual bubble with brand logo (matching preloader size) */}
-        <div className="relative flex items-center justify-center" style={{ width: '220px', height: '220px' }}>
+        <div className="relative flex items-center justify-center" style={{ width: 'clamp(150px, 25vw, 220px)', height: 'clamp(150px, 25vw, 220px)' }}>
           {/* Dashed rotating spinner (skeleton version) */}
           <div 
             className="absolute rounded-full border-4 border-dashed border-slate-200 animate-spin" 
-            style={{ width: '220px', height: '220px', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto', animationDuration: '10s' }} 
+            style={{ width: 'clamp(150px, 25vw, 220px)', height: 'clamp(150px, 25vw, 220px)', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto', animationDuration: '10s' }} 
           />
           {/* Logo bubble */}
           <div 
             className="relative z-10 rounded-full border-4 border-white bg-white p-1 shadow-lg flex items-center justify-center overflow-hidden skeleton-pulse shrink-0"
-            style={{ width: '160px', height: '160px' }}
+            style={{ width: 'clamp(110px, 18vw, 160px)', height: 'clamp(110px, 18vw, 160px)' }}
           >
             <img
               src={logoImg}
@@ -65,20 +65,20 @@ function Preloader() {
       
       <div className="relative flex flex-col items-center space-y-8">
         {/* Animated logo container */}
-        <div className="relative flex items-center justify-center" style={{ width: '220px', height: '220px' }}>
+        <div className="relative flex items-center justify-center" style={{ width: 'clamp(150px, 25vw, 220px)', height: 'clamp(150px, 25vw, 220px)' }}>
           {/* Dashed rotating spinner */}
           <motion.div
             animate={{ scale: [0.95, 1.05, 0.95], rotate: 360 }}
             transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
             className="absolute rounded-full border-4 border-dashed border-white/20"
-            style={{ width: '220px', height: '220px', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto' }}
+            style={{ width: 'clamp(150px, 25vw, 220px)', height: 'clamp(150px, 25vw, 220px)', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto' }}
           />
           {/* Outer breathing ring */}
           <motion.div
             animate={{ scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
             className="absolute rounded-full border-2 border-orange-accent/30"
-            style={{ width: '240px', height: '240px', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto' }}
+            style={{ width: 'clamp(170px, 28vw, 240px)', height: 'clamp(170px, 28vw, 240px)', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto' }}
           />
           
           {/* Logo bubble with spring intro */}
@@ -87,7 +87,7 @@ function Preloader() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.9, type: "spring", stiffness: 110 }}
             className="relative z-10 rounded-full border-4 border-white bg-white p-1 shadow-2xl flex items-center justify-center overflow-hidden"
-            style={{ width: '160px', height: '160px' }}
+            style={{ width: 'clamp(110px, 18vw, 160px)', height: 'clamp(110px, 18vw, 160px)' }}
           >
             <motion.img
               src={logoImg}

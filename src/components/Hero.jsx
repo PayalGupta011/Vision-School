@@ -161,7 +161,7 @@ export default function Hero() {
           {/* Call to Actions */}
           <motion.div 
             variants={textVariants}
-            className="flex flex-wrap items-center gap-4 pt-4"
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4"
           >
             <button
               onClick={() => handleScrollTo('#why-choose-us')}
