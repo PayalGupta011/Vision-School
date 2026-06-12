@@ -30,13 +30,13 @@ function SectionSkeleton({ title }) {
           />
           {/* Logo bubble */}
           <div 
-            className="relative z-10 rounded-full border-4 border-white bg-white p-1 shadow-lg flex items-center justify-center overflow-hidden skeleton-pulse shrink-0"
+            className="relative z-10 rounded-full border-4 border-white bg-white p-0 shadow-lg flex items-center justify-center overflow-hidden skeleton-pulse shrink-0"
             style={{ width: 'clamp(110px, 18vw, 160px)', height: 'clamp(110px, 18vw, 160px)' }}
           >
             <img
               src={logoImg}
               alt="Vision Play School Logo"
-              className="w-full h-full object-cover opacity-85 shrink-0"
+              className="w-[90%] h-[90%] object-cover opacity-85 rounded-full shrink-0"
             />
           </div>
         </div>
@@ -86,13 +86,13 @@ function Preloader() {
             initial={{ scale: 0.3, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.9, type: "spring", stiffness: 110 }}
-            className="relative z-10 rounded-full border-4 border-white bg-white p-1 shadow-2xl flex items-center justify-center overflow-hidden"
+            className="relative z-10 rounded-full border-4 border-white bg-white p-0 shadow-2xl flex items-center justify-center overflow-hidden"
             style={{ width: 'clamp(110px, 18vw, 160px)', height: 'clamp(110px, 18vw, 160px)' }}
           >
             <motion.img
               src={logoImg}
               alt="Vision Play School Logo"
-              className="w-full h-full object-cover"
+              className="w-[90%] h-[90%] object-cover rounded-full"
               animate={{ rotate: [0, 4, -4, 0] }}
               transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
             />
