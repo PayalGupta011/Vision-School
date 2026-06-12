@@ -72,8 +72,11 @@ export default function Hero() {
             backgroundPosition: '68% 26%'
           }}
         />
-        {/* Gradients for text contrast and blending */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
+        {/* Gradients for text contrast and blending - left is dark for readability, fading completely to transparent before the center */}
+        <div 
+          className="absolute inset-0" 
+          style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0) 45%, rgba(0,0,0,0) 100%)' }}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-black/10" />
       </div>
 
@@ -200,12 +203,12 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Floating Scroll Down Indicator (bottom left) */}
+      {/* Floating Scroll Down Indicator (centered) */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-24 left-8 z-20 cursor-pointer text-white/70 hover:text-white transition-colors flex items-center gap-2.5 hidden md:flex"
+        className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 cursor-pointer text-white/70 hover:text-white transition-colors flex items-center gap-2.5 hidden md:flex"
         onClick={() => handleScrollTo('#why-choose-us')}
       >
         <div className="w-5 h-8 border-2 border-white/70 rounded-full flex justify-center pt-1.5">

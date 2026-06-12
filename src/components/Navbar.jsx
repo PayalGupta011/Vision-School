@@ -6,6 +6,7 @@ import logoImg from '../assets/logo.png';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,28 +20,53 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About Us', href: '#why-choose-us' },
-    { name: 'Programs', href: '#why-choose-us' },
-    { name: 'Activities', href: '#day-at-vision' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Admissions', href: '#admission' },
-    { name: 'Contact Us', href: '#footer' }
+    { name: 'Home', href: '#home', path: '/' },
+    { name: 'About Us', href: '#about', path: '/about' },
+    { name: 'Programs', href: '#why-choose-us', path: '/programs' },
+    { name: 'Activities', href: '#day-at-vision', path: '/activities' },
+    { name: 'Gallery', href: '#gallery', path: '/gallery' },
+    { name: 'Admissions', href: '#admission', path: '/admission' },
+    { name: 'Contact Us', href: '#contact', path: '/contact' }
   ];
 
-  const handleScrollTo = (e, id) => {
+  const handleNavClick = (e, path, hash) => {
     e.preventDefault();
     setIsOpen(false);
-    const element = document.querySelector(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+
+    const isCurrentPath = window.location.pathname === path;
+
+    if (!isCurrentPath) {
+      window.history.pushState({}, '', path + (hash || ''));
+      window.dispatchEvent(new Event('popstate'));
+    }
+
+    if (hash) {
+      const delay = isCurrentPath ? 0 : 150;
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          const offset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, delay);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -51,8 +77,8 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'bg-primary/70 border-b border-white/15 py-3 shadow-lg backdrop-blur-md' 
+          (scrolled || currentPath !== '/')
+            ? 'bg-primary/85 border-b border-white/15 py-3 shadow-lg backdrop-blur-md' 
             : 'bg-transparent border-b border-transparent py-5 shadow-none backdrop-blur-none'
         }`}
       >
@@ -62,19 +88,19 @@ export default function Navbar() {
             {/* Logo and Brand Title */}
             <a 
               href="#home" 
-              onClick={(e) => handleScrollTo(e, '#home')} 
-              className="flex items-center gap-3 group"
+              onClick={(e) => handleNavClick(e, '/', '#home')} 
+              className="flex items-center gap-2 sm:gap-3 group shrink-0"
             >
               <img 
                 src={logoImg} 
                 alt="Vision Play School Logo" 
-                className="h-16 w-16 rounded-full border-2 border-white/90 object-cover shadow-md bg-white transition-transform duration-300 group-hover:scale-105"
+                className="h-12 w-12 sm:h-16 sm:w-16 rounded-full border-2 border-white/90 object-cover shadow-md bg-white transition-transform duration-300 group-hover:scale-105 shrink-0"
               />
               <div className="flex flex-col">
-                <span className="font-sans font-extrabold text-lg sm:text-xl tracking-tight leading-none text-white">
+                <span className="font-sans font-extrabold text-sm sm:text-lg md:text-xl tracking-tight leading-none text-white whitespace-nowrap">
                   VISION PLAY SCHOOL
                 </span>
-                <span className="font-sans font-semibold text-[10px] sm:text-xs tracking-wider uppercase mt-0.5 text-sky-accent">
+                <span className="font-sans font-semibold text-[8px] sm:text-[10px] md:text-xs tracking-wider uppercase mt-0.5 text-sky-accent whitespace-nowrap">
                   BANJARITOLA, MALANJKHAND (M.P.)
                 </span>
               </div>
@@ -86,7 +112,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleScrollTo(e, link.href)}
+                  onClick={(e) => handleNavClick(e, link.path, link.href)}
                   className="font-sans font-bold text-sm lg:text-[15px] text-white hover:text-sky-accent transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-sky-accent after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {link.name}
@@ -97,8 +123,8 @@ export default function Navbar() {
             {/* Action Buttons & Mobile Menu Trigger */}
             <div className="flex items-center gap-4">
               <a
-                href="#admission"
-                onClick={(e) => handleScrollTo(e, '#admission')}
+                href="#enquiry"
+                onClick={(e) => handleNavClick(e, '/enquiry', '#enquiry')}
                 className="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold rounded-full text-white bg-orange-accent hover:bg-orange-600 shadow-md hover:shadow-lg transition-all duration-150"
               >
                 Enquire Now <span className="ml-1.5 font-sans font-normal">&rarr;</span>
@@ -131,7 +157,7 @@ export default function Navbar() {
                   <a
                     key={link.name}
                     href={link.href}
-                    onClick={(e) => handleScrollTo(e, link.href)}
+                    onClick={(e) => handleNavClick(e, link.path, link.href)}
                     className="block px-4 py-3 rounded-xl font-sans font-bold text-base text-white hover:text-sky-accent hover:bg-white/5 transition-all"
                   >
                     {link.name}
@@ -139,8 +165,8 @@ export default function Navbar() {
                 ))}
                 <div className="pt-4 px-4 flex flex-col gap-3">
                   <a
-                    href="#admission"
-                    onClick={(e) => handleScrollTo(e, '#admission')}
+                    href="#enquiry"
+                    onClick={(e) => handleNavClick(e, '/enquiry', '#enquiry')}
                     className="w-full text-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-orange-accent hover:bg-orange-600 transition-colors shadow-md"
                   >
                     Enquire Now

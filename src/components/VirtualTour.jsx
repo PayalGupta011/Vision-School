@@ -141,13 +141,19 @@ export default function VirtualTour() {
           {/* Info Card Drawer overlay when activeSpot is chosen */}
           <AnimatePresence>
             {activeSpot && (
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.4 }}
-                className="absolute left-6 top-6 bottom-6 w-96 z-30 flex flex-col bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/80 overflow-hidden"
-              >
+              <>
+                {/* Mobile/Tablet Backdrop Blur Overlay */}
+                <div 
+                  className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+                  onClick={() => setActiveSpot(null)}
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="fixed inset-4 max-w-md max-h-[80vh] m-auto lg:absolute lg:inset-auto lg:left-6 lg:top-6 lg:bottom-6 lg:w-96 z-50 lg:z-30 flex flex-col bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/80 overflow-hidden"
+                >
                 {/* Visual Header */}
                 <div className="relative h-44 bg-slate-100">
                   <img 
@@ -196,6 +202,7 @@ export default function VirtualTour() {
                   </button>
                 </div>
               </motion.div>
+              </>
             )}
           </AnimatePresence>
 

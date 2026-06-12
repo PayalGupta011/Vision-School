@@ -5,17 +5,33 @@ import logoImg from '../assets/logo.png';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const handleScrollTo = (e, id) => {
+  const handleNavClick = (e, path, hash) => {
     e.preventDefault();
-    const element = document.querySelector(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    const isCurrentPath = window.location.pathname === path;
+
+    if (!isCurrentPath) {
+      window.history.pushState({}, '', path + (hash || ''));
+      window.dispatchEvent(new Event('popstate'));
+    }
+
+    if (hash) {
+      const delay = isCurrentPath ? 0 : 150;
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          const offset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, delay);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -51,17 +67,18 @@ export default function Footer() {
             <h4 className="font-sans font-bold text-base tracking-wide uppercase text-sky-accent">Quick Links</h4>
             <ul className="space-y-2.5">
               {[
-                { name: 'Home', href: '#home' },
-                { name: 'Why Choose Us', href: '#why-choose-us' },
-                { name: 'A Day at Vision', href: '#day-at-vision' },
-                { name: 'Moments Gallery', href: '#gallery' },
-                { name: 'Testimonials', href: '#testimonials' },
-                { name: 'Virtual Tour', href: '#virtual-tour' }
+                { name: 'Home', href: '#home', path: '/' },
+                { name: 'About Us', href: '#about', path: '/about' },
+                { name: 'Why Choose Us', href: '#why-choose-us', path: '/programs' },
+                { name: 'A Day at Vision', href: '#day-at-vision', path: '/activities' },
+                { name: 'Moments Gallery', href: '#gallery', path: '/gallery' },
+                { name: 'Testimonials', href: '#testimonials', path: '/' },
+                { name: 'Virtual Tour', href: '#virtual-tour', path: '/' }
               ].map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    onClick={(e) => handleScrollTo(e, link.href)}
+                    onClick={(e) => handleNavClick(e, link.path, link.href)}
                     className="text-white/60 hover:text-white transition-colors text-sm font-sans"
                   >
                     {link.name}
@@ -76,15 +93,15 @@ export default function Footer() {
             <h4 className="font-sans font-bold text-base tracking-wide uppercase text-sky-accent">Programs</h4>
             <ul className="space-y-2.5">
               {[
-                { name: 'Playgroup (1.5 - 2.5 Years)', href: '#admission' },
-                { name: 'Nursery (2.5 - 3.5 Years)', href: '#admission' },
-                { name: 'LKG (3.5 - 4.5 Years)', href: '#admission' },
-                { name: 'UKG (4.5 - 5.5 Years)', href: '#admission' }
+                { name: 'Playgroup & Nursery', href: '#admission', path: '/admission' },
+                { name: 'LKG & UKG', href: '#admission', path: '/admission' },
+                { name: 'Primary (Classes 1st - 5th)', href: '#admission', path: '/admission' },
+                { name: 'Middle School (Classes 6th - 8th)', href: '#admission', path: '/admission' }
               ].map((prog) => (
                 <li key={prog.name}>
                   <a
                     href={prog.href}
-                    onClick={(e) => handleScrollTo(e, prog.href)}
+                    onClick={(e) => handleNavClick(e, prog.path, prog.href)}
                     className="text-white/60 hover:text-white transition-colors text-sm font-sans"
                   >
                     {prog.name}
